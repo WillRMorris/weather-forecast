@@ -14,13 +14,13 @@
         
         <header class="d-flex flex-wrap justify-content-center mb-4 py-4 border-bottom bg-lightblue">
             <h1>
-                Weather Forcast
+                Weather Dashboard
             </h1>
         </header>
         <div class="container-fluid justify-content-center mx-0">
             <div class="row d-flex justify-content-between">
                 <!-- left side of page -->
-                <div class=" search col-12 col-md-2 p-3">
+                <div class=" search col-12 col-md-6 col-lg-3 p-3">
 
                     <!-- contains search form -->
                     <div class=" row align-items-center justify-content-between">
@@ -40,14 +40,17 @@
                     
                 </div>
                 <!-- right side of page -->
-                <div class="col-12 col-md-10 p-3 no-gutters">
+                <div class="col-12 col-md-6 col-lg-9 p-3 no-gutters">
                     <div id="today" class=" row align-items-left">
-                        <div class="col-12 col-md-8 justify-content-left border border-dark">
+                        <div class="col-12 justify-content-left border border-dark my-2">
+                            <div id="title-wrapper">
 
-                            <h2 class="h4"  id="today-date">
-                                Location and date
-                            </h2>
-                            <ul class="m-3">
+                                <h2 class="h4"  id="today-date">
+                                    Location and date
+                                </h2>
+                                <img src="#" id="today-icon" alt="weather icon"></img>
+                            </div>
+                            <ul class="m-3 list-unstyled">
                                 <li id="today-temp">
                                     Temp:
                                 </li>
@@ -61,8 +64,8 @@
                             
                         </div>
                     </div>
-                    <div class="row m-2">
-                        <h3 class="h-4">
+                    <div class="row my-2">
+                        <h3 class="h4 px-0">
                             5 day forcast:
                         </h3>
                     </div>

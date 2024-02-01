@@ -7,3 +7,19 @@
 #today{
     display: none;
 }
+
+#title-wrapper{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+#today-icon {
+    float: right;
+    display: inline;
+}
+
+.day-card {
+    background-color: #010C63;
+    color: white;
+}

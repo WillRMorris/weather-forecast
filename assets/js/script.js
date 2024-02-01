@@ -70,11 +70,17 @@ function handle5Day (weather) {
 
                     //dates should change at midnight 0:00:00 intervals are in 3 hours, so four items ahead of the date change should be noon(12:00:00), which I think is a good time to give a general forcast for a future date as opposed to the temp at midnight.
                     var noon = i+4;
-                    //checks to make sure that there is an object at index noon. the first and last items, depending on the time of day may not have an item, or that item may not be noon if the var noon does not have a date equal to what noon on the current day should look like, creates an object with the current (earliest avaible) time on that day.
+                    //checks to make sure that there is an object at index noon. the first and last items, depending on the time of day may not have an item, or that item may not be noon. If the var noon does not have a date equal to what noon on the current day should look like, creates an object with the current (so earliest avaible) time on that day. Not ideal, but should safely give a forcast for each day.
                     if(list[noon].dt_txt === `${currentDate} 12:00:00`){
-
+                        let temp = list[noon].main.temp;
+                        let wind = list[noon].wind.speed;
+                        let hum = list[noon].main.humidity;
+                        renderDay(currentDate, temp, wind, hum )
                     } else{
-
+                        let temp = list[i].main.temp;
+                        let wind = list[i].wind.speed;
+                        let hum = list[i].main.humidity;
+                        renderDay(currentDate, temp, wind, hum )
                     }
                 }
             }
@@ -83,18 +89,16 @@ function handle5Day (weather) {
 //renders a day on the 5-day on the HTML given variables of date, temp, wind, hum
 function renderDay (date, temp, wind, hum) {
     var wrapper = $('#five-day-wrapper');
-    var card = $('<div class = "day-card card m-3">');
-    var body = $('<div class = "card-body>');
-    var dateBlock = $('<div class = "card-title">');
-    var list = $('<ul class = "m-3">');
+    var card = $('<div class = "day-card card flex-wrap m-1 col-12 col-md-2 justify-content-between border px-1 py-3"> </div>');
+    var dateBlock = $('<div class = "card-title h6">');
+    var list = $('<ul class= "mr-1 my-2 list-unstyled small-font-size">');
     var tempBlock = $('<li>');
     var windBlock = $('<li>');
     var humBlock = $('<li>');
 
     wrapper.append(card);
-    card.append(body);
-    body.append(dateBlock);
-    body.append(list);
+    card.append(dateBlock);
+    card.append(list);
     list.append(tempBlock);
     list.append(windBlock);
     list.append(humBlock);

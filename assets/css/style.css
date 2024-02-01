@@ -4,15 +4,6 @@
 .bg-lightblue {
     background-color: lightblue;
 }
-
-li {
-    list-style: none;
-    margin: 5px;
-}
-
-.day-card{
-    height: 200px;
-}
 #today{
     display: none;
 }

@@ -19,6 +19,9 @@
     display: inline;
 }
 
+#fiveDay-heading-wrapper{
+    display:none;
+}
 .day-card {
     background-color: #010C63;
     color: white;

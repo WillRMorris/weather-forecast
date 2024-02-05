@@ -12,6 +12,8 @@ function fetchForcast(location){
         var lat = place.lat;
         var lon= place.lon;
         console.log(place);
+        toLocalStorage(place.name);
+        loadHistory();
         //today
         fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=imperial&appid=a9909a5368cc548ae8f89a889fbd85c9`)
         .then((res) => res.json())
@@ -20,13 +22,14 @@ function fetchForcast(location){
             console.log(weather);
             renderToday(weather);
         });
-
+        
         //5 days
         fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&units=imperial&appid=a9909a5368cc548ae8f89a889fbd85c9`)
         .then((res) => res.json())
         .then(function(data){
             console.log(data);
             var weather = data;
+            clear5Day();
             handle5Day(weather);
         });
     });
@@ -155,10 +158,73 @@ function clear5Day(){
     headingWrapper.css('display' , 'none');
 }
 
+
+function toLocalStorage(city) {
+    var array = getLocalStorage ();
+    var searchHistory = [];
+    if (array){
+        var searchHistory = array;
+    }
+    if( array.includes(`${city}`)){
+
+        array.splice(array.indexOf(`${city}`), 1)
+    }
+    searchHistory.push(city);
+    searchHistory = JSON.stringify(searchHistory);
+    localStorage.setItem('weatherPastSaved', searchHistory);
+    console.log(localStorage);
+}
+
+function getLocalStorage () {
+    if(localStorage.getItem('weatherPastSaved')){
+
+        var array = localStorage.getItem('weatherPastSaved');
+        array = JSON.parse(array);
+        return array;
+    }
+    else{
+        var array =[];
+        return array;
+    }
+}
+
+function grabLast5 (array) {
+    var lastFive = [];
+    var count = 0;
+    for( let i = array.length -1; i > 0; i--){
+        lastFive.push(array[i]);
+        count++;
+        if(count == 5 || i <= 1){
+            return lastFive;
+        }
+    }
+}
+function loadHistory(){
+    var historyWrapper = $('#history');
+    historyWrapper.empty();
+    var storage = getLocalStorage();
+    var history = grabLast5(storage);
+    console.log(localStorage);
+    if(history != undefined){
+
+        for( let i = 0; i< history.length; i++){
+            let place = $('<button class="btn btn-info m-1"> </button>');
+            place.text(history[i]);
+            historyWrapper.append(place);
+        }
+        historyWrapper.on('click', '.btn', function(event){
+            clear5Day();
+            var text = $(this);
+            console.log(text.text());
+            fetchForcast(text.text());
+        })
+    }
+}
+
+loadHistory();
 form.on('submit', function (event) {
     clear5Day();
     event.preventDefault();
     var city = cityInput.val();
     fetchForcast(city);
-})
-
+}); 
